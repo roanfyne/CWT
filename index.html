@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Local Party</title>
+  <link rel="shortcut icon" href="icon.png">
+  <!-- Notyf -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+  <script defer src="render.js"></script>
+  <link rel="stylesheet" href="index.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+  <!-- Landing Page -->
+  <div class="landing" id="landing">
+    <div>
+      <img src="icon.png" width="300px" alt="Logo">
+      <h1 class="head">
+        Local Party
+      </h1>
+      <button class="buttons" id="createRoomButton">
+        Create Room
+      </button>
+      <button class="buttons" id="joinRoomButton">
+        Join Room
+      </button>
+    </div>
+  </div>
+
+  <!-- Create Page -->
+  <div class="create" id="create">
+    <div class="header">
+      <img src="assets/back.svg" class="back-btn" id="backButton"></img>
+    </div>
+    <div class="content">
+      <h1 class="create-head">
+        Create Room
+      </h1>
+      <p id="createRoomText"></p>
+      <input class="" type="text" name="username" id="create-username" placeholder="username" autocomplete="off"
+        required>
+      <input class="" type="text" name="roomname" id="roomname" placeholder="room name" autocomplete="off" required>
+      <input type="file" class="form-control fileInput" id="file-id" onchange="onChangeFile();">
+      <button class="buttons" style="width: 10rem;" id="roomCreateButton">
+        Create
+      </button>
+    </div>
+  </div>
+
+  <!-- Join Page -->
+  <div class="join" id="join">
+    <div class="header">
+      <img src="assets/back.svg" class="back-btn" id="backButton"></img>
+    </div>
+    <div class="content">
+      <h1 class="create-head">
+        Join Room
+      </h1>
+      <p id="joinRoomText"></p>
+      <input class="" type="text" name="username" id="join-username" placeholder="username" autocomplete="off" required>
+      <input class="" type="text" name="roomCode" id="roomCode" placeholder="room code" autocomplete="off" required>
+      <input type="file" class="form-control fileInput" id="join-file-id" onchange="onChangeJoinFile();">
+      <button class="buttons" style="width: 10rem;" id="roomJoinButton">
+        Join
+      </button>
+    </div>
+  </div>
+
+  <!-- Room Page -->
+  <div class="room" id="room">
+    <div class="video video-player-conatiner">
+      <video id="video-player" class="video-js vjs-big-play-centered" controls preload="metadata" data-setup='{}'>
+        <source id="videoSrc" src="test.mp4" type="video/mp4" />
+      </video>
+    </div>
+    <div class="right-side">
+      <h1 class="room-code" id="roomNameText">Room Name</h1>
+      <div class="action-bar">
+        <img src="assets/logout.svg" id="roomLeaveButton" class="action-icon"></img>
+        <h2 class="room-code" data-toggle="tooltip" data-placement="left" title="Room Code" id="roomCodeText">1234</h2>
+        <img src="assets/groups.svg" id="pplinparty" class="members action-icon" data-toggle="tooltip"
+          data-placement="left"></img>
+      </div>
+      <div class="row mt-2 mb-2 messages" id="messages-box"></div>
+      <form action="#" id="send-form">
+        <input autocomplete="off" class="form-control" type="text" name="messageInp" id="messageInp"
+          placeholder="Message">
+      </form>
+    </div>
+  </div>
+  <script src="https://local-party.herokuapp.com/socket.io/socket.io.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+</body>
+
+</html>
