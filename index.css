@@ -1,283 +1,400 @@
+/* index.css — modernized
+   - CSS variables for color/spacing
+   - prefers-color-scheme for automatic light/dark
+   - preserves original class names (no HTML changes required)
+   - still navy/black look by default
+*/
+
+/* Keep custom font */
 @font-face {
   font-family: 'Airbnb';
-  src: URL('../fonts/AirbnbCerealBlack.ttf') format('truetype');
+  src: url('../fonts/AirbnbCerealBlack.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
 
+/* Root variables (dark-by-default navy/black) */
+:root {
+  --bg: #0b1220;             /* deep navy background */
+  --surface: #111316;        /* main surfaces (kept from original) */
+  --panel: #15181c;          /* slightly lighter panels */
+  --muted: #9aa4b2;          /* muted text */
+  --text: #ffffff;           /* primary text */
+  --accent: #2d6cdf;         /* navy-blue accent */
+  --accent-contrast: #ffffff;
+  --danger: #e0554f;
+  --success: #37b24d;
+
+  --radius: 8px;
+  --pill-radius: 999px;
+  --gap: 1rem;
+  --max-width: 1100px;
+
+  --shadow-sm: 0 1px 2px rgba(3,6,12,0.4);
+  --shadow-md: 0 8px 20px rgba(2,6,23,0.6);
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-bold: 700;
+
+  --font-ui: 'Lexend Deca', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  --font-display: 'Airbnb', var(--font-ui);
+  --base-size: 16px;
+}
+
+/* Optional class-based toggles (no HTML changes required; useful later) */
+:root.light-theme {
+  --bg: #f5f7fb;
+  --surface: #ffffff;
+  --panel: #f0f3f8;
+  --muted: #495057;
+  --text: #0b1220;
+  --accent: #1f4fa8; /* darker accent for contrast on light */
+  --shadow-sm: 0 1px 2px rgba(12,20,40,0.06);
+  --shadow-md: 0 8px 20px rgba(12,20,40,0.08);
+}
+
+/* Use user's system preference: light or dark */
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f5f7fb;
+    --surface: #ffffff;
+    --panel: #f0f3f8;
+    --muted: #495057;
+    --text: #0b1220;
+    --accent: #1f4fa8;
+    --shadow-sm: 0 1px 2px rgba(12,20,40,0.06);
+    --shadow-md: 0 8px 20px rgba(12,20,40,0.08);
+  }
+}
+
+/* Global resets & sensible defaults */
 *,
-*::after,
-*::before {
+*::before,
+*::after {
   box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+html {
+  font-size: var(--base-size);
+  height: 100%;
+}
 
 body {
-  background-color: #111316;
-  color: white;
-  font-family: 'Lexend Deca', sans-serif;
   margin: 0;
-  padding: 0;
-  height: 100dvh;
+  min-height: 100svh;
+  font-family: var(--font-ui);
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color .25s ease, color .25s ease;
 }
 
-.back-btn {
-  width: 2rem;
-  color: white;
+/* Utility helpers */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
-.back-btn:hover {
-  cursor: pointer;
-}
-
-
-/* Landing Page Start */
-
-.landing {
-  display: none;
-  width: 100%;
-  height: 100%;
+.center {
+  display: grid;
   place-items: center;
 }
 
+/* Links & icons */
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color .15s ease;
+}
+a:hover,
+a:focus {
+  color: color-mix(in srgb, var(--accent) 80%, var(--text) 20%);
+  outline: none;
+}
+
+/* Buttons */
+button,
+button[type="button"],
+.buttons {
+  font-family: var(--font-ui);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  border: none;
+  border-radius: 10px;
+  padding: .55rem 1rem;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-weight: var(--fw-medium);
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: transform .08s ease, box-shadow .12s ease, background-color .12s ease;
+}
+button:hover,
+button:focus {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+button.ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
+}
+
+/* Back button kept small to match original */
+.back-btn {
+  width: 2rem;
+  color: var(--text);
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+/* Landing Page */
+.landing {
+  display: none; /* preserved behavior */
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  padding: 2rem;
+}
 .landing > div {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1em;
+  gap: var(--gap);
 }
 
+/* Main shell */
 .main {
-  background-color: #111316;
-  height: 100vh;
+  background-color: var(--surface);
+  min-height: 100vh;
+  transition: background-color .25s ease;
 }
 
+/* Logo and headings */
 .logo {
   margin-top: 10vh;
 }
-
+.head,
+.create-head {
+  font-family: var(--font-display);
+  color: var(--text);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
 .head {
-  font-size: 3.5rem;
-  color: white;
-  font-family: 'Airbnb';
+  font-size: clamp(2rem, 6vw, 3.5rem);
+}
+.create-head {
+  font-size: clamp(1.8rem, 5vw, 3rem);
 }
 
+/* Forms & inputs */
+input,
+textarea,
+select {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  color: var(--text);
+  background: color-mix(in srgb, var(--surface) 85%, transparent 15%);
+  border: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
+  padding: .65rem .9rem;
+  border-radius: 8px;
+  transition: box-shadow .12s ease, border-color .12s ease, background-color .12s ease;
+}
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 6px 18px rgba(19, 82, 206, 0.12);
+}
+
+/* File input and drag/drop */
+.fileInput {
+  width: 20rem;
+  margin: 0 auto;
+}
+.dragDrop {
+  margin: auto;
+  text-align: left;
+  background-color: var(--surface);
+  color: var(--muted);
+  border-radius: var(--pill-radius);
+  width: 20rem;
+  height: 3rem;
+  font-size: 1.05rem;
+  border: 1px dashed color-mix(in srgb, var(--text) 10%, transparent);
+  padding: 8px 16px;
+}
+
+/* Buttons (preserve original .buttons name used in markup) */
 .buttons {
-  border-radius: 5px;
-  background-color: white;
-  border: none;
-  color: #111316;
-  font-size: 1.3rem;
+  border-radius: 10px;
+  background-color: var(--accent);
+  color: var(--accent-contrast);
+  font-size: 1.05rem;
   width: 13rem;
   height: 3rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
+/* Settings anchored at bottom (preserves original behavior) */
 .settings {
   width: 100%;
   position: absolute;
   bottom: 3rem;
+  display: flex;
+  justify-content: center;
+  gap: .5rem;
 }
-
 .settings a:hover {
-  color: white;
+  color: var(--text);
 }
 
+/* Icons */
 .icon {
-  color: white;
-  font-size: 2.5rem;
+  color: var(--text);
+  font-size: 2rem;
 }
-
 .icon:hover {
   cursor: pointer;
 }
 
-/* Landing Page End */
-
-/* Create Page Start */
-
+/* Create / Join pages */
 .create, .join {
-  display: none;
+  display: none; /* preserved */
   height: 100%;
+  padding: 1rem;
 }
-
 .header {
   padding: 1em;
 }
-
 .content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1em;
+  gap: var(--gap);
 }
-
 .content h1 {
   text-align: center;
 }
 
-.create-head {
-  font-family: 'Airbnb';
-  font-size: 3.5rem;
-}
-
-input {
-  background-color: #111316;
-  color: white;
-  border-radius: 5px;
-  width: 20rem;
-  font-size: 1.1rem;
-  border: 1px solid white;
-  padding: 10px 15px;
-}
-
-input:focus {
-  outline: none;
-}
-
-.fileInput {
-  width: 20rem;
-  margin: auto;
-}
-
-.dragDrop {
-  margin: auto;
-  text-align: left;
-  background-color: white;
-  color: gray;
-  border-radius: 50px;
-  width: 20rem;
-  height: 3rem;
-  font-size: 1.1rem;
-  border: none;
-  padding: 10px 15px;
-}
-
-/* Create Page End */
-
-/* Join Page Start */
-
-.join {
-  display: none;
-}
-
-.join-col {
-  margin-top: 20vh;
-}
-
-/* Join Page End */
-
-/* Room Page Start */
-
+/* Room page */
 .room {
   display: none;
   height: 100%;
 }
-
 #roomCodeText:hover {
   cursor: pointer;
 }
 
+/* Right side panel */
 .right-side {
   display: flex;
-  flex-flow: column;
+  flex-direction: column;
   width: 25em;
-  background-color: #222;
-  padding: 1em;
+  background-color: var(--panel);
+  padding: 1rem;
+  gap: .75rem;
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  transition: background-color .2s ease, box-shadow .15s ease;
 }
 
+/* Action bar */
 .action-bar {
   display: flex;
+  gap: .5rem;
+  align-items: center;
 }
-
 .action-bar h2 {
   text-align: center;
   flex-grow: 1;
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--text);
 }
-
 .action-icon {
   width: 2.5em;
 }
 
-
+/* Video container */
 .video {
   display: flex;
   justify-content: center;
   flex-grow: 1;
   height: 100%;
-  border-radius: 30px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(0,0,0,0.06), transparent);
 }
-
 #video-player {
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 
-.icon {
-  font-size: 1.5rem;
-}
-
+/* Room specific text sizes */
 .room-code,
 .members {
-  font-size: 1.2rem;
+  font-size: 1.05rem;
+  color: var(--muted);
 }
 
+/* Scrollbar modernized but unobtrusive */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 8px;
+  height: 8px;
 }
-
 ::-webkit-scrollbar-track {
-  background-color: rgb(73, 73, 73);
-  border-radius: 50px;
+  background: transparent;
 }
-
 ::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 50px;
+  background: color-mix(in srgb, var(--text) 16%, transparent);
+  border-radius: 999px;
+  transition: background-color .12s ease;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--text) 26%, transparent);
 }
 
-#messages-box {
-  
-}
-
+/* Messages area */
 .messages {
   display: block;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   flex-grow: 1;
   height: 0;
+  padding-right: .25rem;
 }
 
+/* Message input */
 #messageInp {
-  border-radius: 5px;
+  border-radius: 8px;
   height: 2.5rem;
   width: 100%;
   box-shadow: none;
-  border: none;
-  color: white;
-  background-color: gray;
+  border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
+  color: var(--text);
+  background-color: color-mix(in srgb, var(--surface) 85%, transparent 15%);
+  padding: .4rem .6rem;
 }
-
 #messageInp::placeholder {
-  color: white;
-  font-size: 0.8rem;
+  color: var(--muted);
+  font-size: 0.9rem;
 }
-
 #message {
-  height: fit-content;
-}
-
-/* Room Page End */
-
-@media (max-width: 450px) {
-  .room {
-    flex-flow: column;
-  }
-  .video {
-    flex-grow: 0;
-    height: auto;
-    width: 100%;
-  }
-
-  .right-side {
-    flex-grow: 1;
-    width: 100%;
-  }
-}
+  height:*
+
